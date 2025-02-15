@@ -1,0 +1,4 @@
+Maincfg Category
+TitleMap = 0
+TitleScrollSpeed = 0
+titlepicsmode = Old

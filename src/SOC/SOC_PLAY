@@ -1,0 +1,38 @@
+Character
+SkinName = book
+DisplayName = Book
+TagTextColor = SKINCOLOR_GREEN
+TagOutlineColor = SKINCOLOR_MIDNIGHT
+PlayerText = Just like in ^2BFDIA5b^0 Book can grab stuff like objects, players and enemies by using ^2C1^0 and throw them by pressing the same button, its's also possible to drop them by pressing ^2C2^0.
+
+You can also slide and crouch by holding ^2SPIN^0!
+#
+
+Character
+SkinName = icecube
+DisplayName = Ice Cube
+TagTextColor = SKINCOLOR_ICY
+TagOutlineColor = SKINCOLOR_BLUEBELL
+PlayerText = Hold ^2SPIN^0 to slide, you will be able to bounce off walls if you crash into them while sliding
+
+Ice Cube is the fastest out of the three.
+
+#
+Character
+SkinName = match
+DisplayName = Match
+TagTextColor = SKINCOLOR_YOGURT
+TagOutlineColor = SKINCOLOR_ROSEWOOD
+PlayerText = Press ^2C1^0 to pick up and throw stuff and ^2C2^ to throw stuff.
+
+She also has a higher jump compared to Book
+#
+
+#
+Character
+SkinName = bubble
+DisplayName = Bubble
+TagTextColor = SKINCOLOR_YOGURT
+TagOutlineColor = SKINCOLOR_ROSEWOOD
+PlayerText = insert bubble text
+#

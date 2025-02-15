@@ -1,0 +1,22 @@
+name = icecube
+realname = Ice_Cube
+hudname = ICE_CUBE
+ability = CA_NONE
+ability2 = CA2_NONE
+normalspeed = 47
+thrustfactor = 5
+accelstart = 80
+acceleration = 40
+jumpfactor = 0.9
+height = 45
+spinheight = 25
+startcolor = 96
+prefcolor = Bluebell
+prefoppositecolor = Sky
+highresscale = 0.3
+flags = SF_HIRES|SF_FASTEDGE|SF_NOJUMPSPIN|SF_SUPER
+
+DSALTDI1 = DSICYDIE
+DSALTDI2 = DSICYDIE
+DSALTDI3 = DSICYDIE
+DSALTDI4 = DSICYDIE

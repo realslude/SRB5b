@@ -1,0 +1,34 @@
+Level B5
+Levelname = BFDIA 5b
+Act = 0
+NoZone = true
+Music = BFDIA
+TypeOfLevel = Singleplayer,2D,COOP
+NextLevel = 1
+SkyNum = 2763
+RecordAttack = false
+LevelSelect = 2
+SelectHeading = Bonus Stages
+SaveGame = true
+SkyboxScale = 64
+FlickyList = Bluebird,Chipmunk
+NoVisitNeeded = true
+ForceCharacter = Book
+#
+
+Level B4
+Levelname = Test
+NoZone = true
+Act = 0
+Music = BCZ2
+NoZone = true
+TypeOfLevel = Singleplayer,COOP
+NextLevel = 1
+SkyNum = 2763
+RecordAttack = false
+LevelSelect = 2
+SelectHeading = Bonus Stages
+SaveGame = true
+SkyboxScale = 64
+FlickyList = Bluebird,Chipmunk
+NoVisitNeeded = true

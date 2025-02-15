@@ -1,0 +1,20 @@
+name = match
+ability = CA_NONE
+ability2 = CA2_NONE
+normalspeed = 40
+thrustfactor = 5
+accelstart = 80
+acceleration = 40
+height = 85
+spinheight = 25
+startcolor = 96
+prefcolor = Flame
+prefoppositecolor = Peachy
+highresscale = 0.35
+jumpfactor = 1.15
+flags = SF_HIRES|SF_NOJUMPSPIN|SF_SUPER
+
+DSALTDI1 = DSBFDISR
+DSALTDI2 = DSBFDISR
+DSALTDI3 = DSBFDISR
+DSALTDI4 = DSBFDISR
