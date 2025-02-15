@@ -27,17 +27,17 @@ jobs:
     - name: do the thing pls
       run: |
         mkdir build
-        node PaK3/main.js src/ build/CL_SRB5b-$NOW.pk3
+        node PaK3/main.js src/ build/CL_SRB5b-${{ env.NOW }}.pk3
     
     - name: send thing to the action tab
       uses: actions/upload-artifact@v4
       with:
         name: srb5b
-        path: build/CL_SRB5b-$NOW.pk3
+        path: build/CL_SRB5b-${{ env.NOW }}.pk3
 
     - name: could you preetty please send the file to the discord
       uses: sinshutu/upload-to-discord@master
       env:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       with:
-        args: build/CL_SRB5b-$NOW.pk3
+        args: build/CL_SRB5b-${{ env.NOW }}.pk3
