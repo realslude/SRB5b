@@ -16,16 +16,8 @@ jobs:
     
     - name: Set current date as env variable # pacola if coyping from https://stackoverflow.com/questions/60942067/get-current-date-and-time-in-github-workflows was a challenge:
       run: echo "NOW=$(date +%Y-%m-%d)" >> $GITHUB_ENV
-
-    # - name: get PaK3 and the rest
-    #  run: | # uhhhm imagine this isn't the same thing the murder mystery github uses :D -pac
-    #    sudo apt-get install -y nodejs
-    #    sudo npm install argparse
-    #    sudo npm install deasync
-    #    sudo npm install jimp
-    #    sudo npm install jszip
-    #    git clone https://github.com/UnmatchedBracket/PaK3.git
-     - name: get PaK3 and the rest # now this is a fusion as the ntopp git and muder mystery git -pac
+      
+    - name: get PaK3 and the rest # now this is a fusion as the ntopp git and muder mystery git -pac
       run: | 
         sudo apt-get install -y nodejs
         git clone https://github.com/UnmatchedBracket/PaK3.git
