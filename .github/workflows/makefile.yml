@@ -15,8 +15,8 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Set current date as env variable # pacola if coyping from https://stackoverflow.com/questions/60942067/get-current-date-and-time-in-github-workflows was a challenge:
-        run: echo "NOW=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
-    
+      run: echo "NOW=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+
     - name: get PaK3 and the rest
       run: | # uhhhm imagine this isn't the same thing the murder mystery github uses :D -pac
         sudo apt-get install -y nodejs
