@@ -9,6 +9,9 @@
 -- future future pac here
 -- now i've made a true rewrite
 
+-- sludesus here
+-- "I'm also in the grab_stuff_the_lua.lua too!"
+
 local deadlythrow = CV_RegisterVar({
 	name = "book_deadlythrow",
 	defaultvalue = "Off",
