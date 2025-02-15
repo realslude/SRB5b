@@ -1,0 +1,43 @@
+name: Makefile CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set current date as env variable # pacola if coyping from https://stackoverflow.com/questions/60942067/get-current-date-and-time-in-github-workflows was a challenge:
+        run: echo "NOW=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+    
+    - name: get PaK3 and the rest
+      run: | # uhhhm imagine this isn't the same thing the murder mystery github uses :D -pac
+        sudo apt-get install -y nodejs
+        sudo npm install argparse
+        sudo npm install deasync
+        sudo npm install jimp
+        sudo npm install jszip
+        git clone https://github.com/UnmatchedBracket/PaK3.git
+
+    - name: do the thing pls
+      run: node PaK3/main.js src/ CL_SRB5b-$NOW.pk3
+
+    - name: send thing to the action tab
+      uses: actions/upload-artifact@v4
+      with:
+        name: srb5b
+        path: CL_SRB5b-$NOW.pk3
+
+    - name: Send file README.md to discord channel
+      uses: sinshutu/upload-to-discord@master
+      env:
+        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      with:
+        args: CL_SRB5b-$NOW.pk3
