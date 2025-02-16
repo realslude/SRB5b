@@ -41,3 +41,10 @@ jobs:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       with:
         args: build/CL_SRB5b-${{ env.NOW }}.pk3
+
+    - name: gives us the commits pleaaase
+      uses: Sniddl/discord-commits@v1.6
+      with:
+        webhook: ${{ secrets.DISCORD_WEBHOOK }}
+        template: "avatar-with-link"
+        include-extras: true

@@ -126,9 +126,13 @@ local intertic = 0 -- i swear this will end up resynching somehow D:
 local stagefailed
 local intspec = {}
 
+local hudinfoList = { "x", "y", "f" }
+local srb5bLives = {x = 16, y = 176-12, f = V_SNAPTOLEFT|V_SNAPTOBOTTOM|V_PERPLAYER}
+local prevlives
+
 addHook("ThinkFrame", function()
 	if not displayplayer
-	or not (splitscreen and secondarydisplayplayer) return end
+	and not (splitscreen and secondarydisplayplayer) return end
 	
 	intertic = 0
 	stagefailed = nil
@@ -137,17 +141,23 @@ addHook("ThinkFrame", function()
 	if not (p.mo and p.mo.valid) then return end
 	
 	if not SRB5b_skinCheck(p.mo.skin)
-		if not hud.enabled("lives")
-		and p.fbhudactive -- f stands for five since uhhh i cant do 5b
-			hud.enable("lives")
+		if p.fbhudactive or p.fbhudactive == nil then  -- f stands for five since uhhh i cant do 5b
+			if prevlives then
+				for _, val in ipairs(hudinfoList) do
+					hudinfo[HUD_LIVES][val] = prevlives[val]
+				end
+				prevlives = nil
+			end
 			hud.enable("coopemeralds")
 			p.fbhudactive = false
-			--print(p.mo.skin)
 		end
-	elseif hud.enabled("lives")
-	and not p.fbhudactive
-		hud.disable("lives")
+	elseif not p.fbhudactive then
 		hud.disable("coopemeralds")
+		prevlives = {}
+		for _, val in ipairs(hudinfoList) do
+			prevlives[val] = hudinfo[HUD_LIVES][val]
+			hudinfo[HUD_LIVES][val] = srb5bLives[val]
+		end
 		p.fbhudactive = true
 	end
 end)
