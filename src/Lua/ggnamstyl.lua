@@ -69,17 +69,19 @@ addHook("PlayerThink", function(p)
 	if p.bookgangnam
 		local musPlaying = S_MusicPlaying(p)
 		local musName = S_MusicName(p)
+		
+		local jingleName = mapheaderinfo[gamemap] and (mapheaderinfo[gamemap].typeoflevel & TOL_MARIO) and "BOKMAR" or "BOKGNG"
 		if tostring(musName) then musName = tostring($):upper() end
 		
 		if not p.bookgangnamsong then
 			p.bookgangnamsong = true
-			P_PlayJingleMusic(p, "BOKGNG", 0, true)
+			P_PlayJingleMusic(p, jingleName, 0, true)
 		end
 		
-		if musName ~= "BOKGNG"
+		if musName ~= jingleName
 		and musPlaying then
-			S_ChangeMusic("BOKGNG", true, p, 0, (gangnamPos or 0))
-		elseif musName == "BOKGNG"
+			S_ChangeMusic(jingleName, true, p, 0, (gangnamPos or 0))
+		elseif musName == jingleName
 		and musPlaying then
 			S_SetMusicPosition(gangnamPos)
 		end
