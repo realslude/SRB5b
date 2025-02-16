@@ -32,7 +32,7 @@ addHook("NetVars", function(net)
 end)
 
 local function skinCheck(p)
-	return (p.mo.skin == "book" or p.mo.skin == "match")
+	return (p.mo.skin == "book" or p.mo.skin == "match" or p.mo.skin == "icecube")
 end
 
 addHook("PlayerThink", function(p)
