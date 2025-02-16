@@ -31,6 +31,10 @@ addHook("NetVars", function(net)
 	gangnamPos = net($)
 end)
 
+local function isMarioMode()
+	return mapheaderinfo[gamemap] and (mapheaderinfo[gamemap].typeoflevel & TOL_MARIO) and true or false
+end
+
 addHook("PlayerThink", function(p)
 	if not (p.mo and p.mo.valid)
 	or not SRB5b_skinCheck(p.mo.skin) then
@@ -65,21 +69,31 @@ addHook("PlayerThink", function(p)
 	if p.bookgangnam
 		local musPlaying = S_MusicPlaying(p)
 		local musName = S_MusicName(p)
+		local musLen = S_GetMusicLength()
 		
-		local jingleName = mapheaderinfo[gamemap] and (mapheaderinfo[gamemap].typeoflevel & TOL_MARIO) and "BOKMAR" or "BOKGNG"
+		local jingleName = isMarioMode() and "BOKMAR" or "BOKGNG"
 		if tostring(musName) then musName = tostring($):upper() end
 		
 		if not p.bookgangnamsong then
 			p.bookgangnamsong = true
 			P_PlayJingleMusic(p, jingleName, 0, true)
+			musLen = S_GetMusicLength()
 		end
+		
+		local didLoop = false
+		local uPos = gangnamPos
+		while uPos > musLen do
+			uPos = $-musLen
+			didLoop = true
+		end
+		if didLoop then uPos = $+(S_GetMusicLoopPoint(p) or 0) end
 		
 		if musName ~= jingleName
 		and musPlaying then
-			S_ChangeMusic(jingleName, true, p, 0, (gangnamPos or 0))
+			S_ChangeMusic(jingleName, true, p, 0, (uPos or 0))
 		elseif musName == jingleName
 		and musPlaying then
-			S_SetMusicPosition(gangnamPos)
+			S_SetMusicPosition(uPos)
 		end
 		
 		if p.mo.state ~= S_BOOK_GANGNAM

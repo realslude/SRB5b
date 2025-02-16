@@ -181,19 +181,23 @@ end)
 -- lua made by pacola for book mod srb2 :D
 
 addHook("PlayerThink", function(p)
-	if not (p.mo and p.mo.valid)
-	or p.mo.skin ~= "book" return end
+	if not (p.mo and p.mo.valid) then return end
 	
 	
-	if p.mo.state == S_PLAY_PAIN
-	and p.mo.anim_duration > 2
-		p.mo.anim_duration = 2
-	elseif p.mo.state == S_PLAY_WAIT
-	and p.mo.tics > 4
-		p.mo.tics = 4
-	elseif p.mo.state == (S_PLAY_EDGE or S_PLAY_WALK)
-	and p.mo.tics > 2
-		p.mo.tics = 2
+	if p.mo.skin == "book" then
+		if p.mo.state == S_PLAY_PAIN
+		and p.mo.anim_duration > 2
+			p.mo.anim_duration = 2
+		elseif p.mo.state == S_PLAY_WAIT
+		and p.mo.tics > 4
+			p.mo.tics = 4
+		elseif p.mo.state == (S_PLAY_EDGE or S_PLAY_WALK)
+		and p.mo.tics > 2
+			p.mo.tics = 2
+		end
+	elseif p.mo.skin == "match" 
+	and p.mo.state == S_PLAY_EDGE then
+		p.mo.tics = min($, 4)
 	end
 end)
 

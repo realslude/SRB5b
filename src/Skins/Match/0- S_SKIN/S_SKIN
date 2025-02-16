@@ -12,6 +12,7 @@ prefcolor = Flame
 prefoppositecolor = Peachy
 highresscale = 0.35
 jumpfactor = 1.15
+shieldscale = 1.75
 flags = SF_HIRES|SF_NOJUMPSPIN|SF_SUPER
 
 DSALTDI1 = DSBFDISR
