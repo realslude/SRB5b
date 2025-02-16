@@ -31,13 +31,9 @@ addHook("NetVars", function(net)
 	gangnamPos = net($)
 end)
 
-local function skinCheck(p)
-	return (p.mo.skin == "book" or p.mo.skin == "match" or p.mo.skin == "icecube")
-end
-
 addHook("PlayerThink", function(p)
 	if not (p.mo and p.mo.valid)
-	or not skinCheck(p) then
+	or not SRB5b_skinCheck(p.mo.skin) then
 		if p.bookgangnam then
 			if p.mo.state == S_BOOK_GANGNAM then
 				p.mo.state = S_PLAY_STND
