@@ -22,15 +22,16 @@ Soundtestcond = 0
 BPM = 73
 
 Lump BOKGNG
-Title = The Flintstones (super remastered not unstylish version) - LEGO Dimensions
+Title = The_Flintstones
+Alttitle = (super_remastered_not_unstylish version)
 Authors = SiIvaGunner
 Soundtestpage = 1
 Soundtestcond = 0
-BPM = 160
+BPM = 132
 
 Lump BOKMAR
 Title = Super_Mario_Style
 Authors = PSY,_DatVoiceGuy_(Audiyo)
 Soundtestpage = 1
 Soundtestcond = 0
-BPM = 160
+BPM = 132
