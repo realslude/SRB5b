@@ -2,8 +2,7 @@
 local cameraMo
 
 addHook("ThinkFrame", function()
-	if gamestate ~= GS_TITLESCREEN
-	or not (mapheaderinfo[gamemap] and mapheaderinfo[gamemap].is5btitle) then
+	if gamestate ~= GS_TITLESCREEN then
 		cameraMo = nil
 		return
 	end
