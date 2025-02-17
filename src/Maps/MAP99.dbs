@@ -22,9 +22,9 @@ maps
 		}
 		defaultfloortexture = "GFZFLR01";
 		defaultceiltexture = "F_SKY1";
-		defaulttoptexture = "GFZROCK";
-		defaultwalltexture = "GFZROCK";
-		defaultbottomtexture = "GFZROCK";
+		defaulttoptexture = "SKY2763";
+		defaultwalltexture = "SKY2763";
+		defaultbottomtexture = "SKY2763";
 		custombrightness = 196;
 		customfloorheight = 0;
 		customceilheight = 128;
@@ -37,9 +37,9 @@ maps
 		overrideceilheight = false;
 		overridebrightness = false;
 		uselongtexturenames = false;
-		viewpositionx = 239.762f;
-		viewpositiony = -258.98f;
-		viewscale = 0.6499997f;
+		viewpositionx = 520.0889f;
+		viewpositiony = -42.9046f;
+		viewscale = 0.4735579f;
 		
 		grid
 		{
@@ -49,7 +49,7 @@ maps
 			backoffsety = 0;
 			backscalex = 100;
 			backscaley = 100;
-			gridsize = 32;
+			gridsize = 8;
 		}
 	}
 }
