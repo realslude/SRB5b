@@ -11,7 +11,7 @@ freeslot("SPR_5BBX", "MT_BOOK_WOODBOX", "MT_BOOK_METALBOX", "MT_BOOK_BOXDUMMY")
 mobjinfo[MT_BOOK_WOODBOX] = {
 	--$Title Wooden Box
 	--$Sprite 5BBXA0
-	--$Category Book/BFDIA 5b
+	--$Category SRB5b/BFDIA 5b
 	--$Angled
 	doomednum = 3200,
 	spawnhealth = 1,
@@ -27,7 +27,7 @@ mobjinfo[MT_BOOK_WOODBOX] = {
 mobjinfo[MT_BOOK_METALBOX] = {
 	--$Title Metal Box
 	--$Sprite 5BBXB0
-	--$Category Book/BFDIA 5b
+	--$Category SRB5b/BFDIA 5b
 	--$Angled
 	doomednum = 3201,
 	spawnhealth = 1,
