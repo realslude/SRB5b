@@ -1,4 +1,4 @@
 Maincfg Category
-TitleMap = 0
+TitleMap = 99
 TitleScrollSpeed = 0
-titlepicsmode = Old
+TitlePicsMode = Hide
