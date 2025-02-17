@@ -8,7 +8,7 @@ addHook("ThinkFrame", function()
 	end
 	
 	if not (cameraMo and cameraMo.valid) then
-		local aimingZ
+		local aimingAngle
 		for mo in mobjs.iterate() do
 			if mo.type == MT_BLUECRAWLA then
 				local cmo = P_SpawnMobj(mo.x, mo.y, mo.z, MT_THOK)
@@ -19,15 +19,11 @@ addHook("ThinkFrame", function()
 				cameraMo = cmo
 				P_RemoveMobj(mo)
 			elseif mo.type == MT_REDCRAWLA then
-				aimingZ = mo.z
+				aimingAngle = mo.angle
 				P_RemoveMobj(mo)
 			end
 		end
-		if aimingZ == nil then
-			cameraMo.srb5baiming = 0
-		else
-			cameraMo.srb5baiming = R_PointToAngle2(0, cameraMo.z, 0, aimingZ)
-		end
+		cameraMo.srb5baiming = aimingAngle or 0
 	else
 		P_TeleportCameraMove(camera, cameraMo.x, cameraMo.y, cameraMo.z)
 		camera.angle = cameraMo.angle
