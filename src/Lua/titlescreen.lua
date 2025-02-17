@@ -20,19 +20,17 @@ mobjinfo[MT_SRB5B_CHARSPAWN] = {
 local function getRandomSkin(blacklist)
 	blacklist = $ or {}
 	
-	local rSkin = P_RandomRange(0, #skins)
+	local rSkin = P_RandomRange(0, #skins-1)
 	
 	local blacklistLen = 0
 	for _, val in pairs(blacklist) do
 		blacklistLen = $+1
 	end
 	
-	if blacklistLen == #skins then
-		rSkin = nil
-	else
-		while blacklist[rSkin] do
-			rSkin = P_RandomRange(0, #skins)
-		end
+	if blacklistLen == #skins then return end
+	
+	while blacklist[rSkin] do
+		rSkin = P_RandomRange(0, #skins-1)
 	end
 	
 	return rSkin
@@ -63,6 +61,7 @@ addHook("ThinkFrame", function()
 				P_RemoveMobj(mo)
 			elseif mo.type == MT_SRB5B_CHARSPAWN then
 				mo.state = S_PLAY_STND
+				mo.tics = -1
 				mo.frame = $|FF_ANIMATE
 				
 				local rSkin = getRandomSkin(skinList)
@@ -71,20 +70,21 @@ addHook("ThinkFrame", function()
 					P_RemoveMobj(mo)
 					continue
 				end
+				local skin = skins[rSkin]
 				
 				skinList[rSkin] = true
-				mo.skin = rSkin
-				mo.color = skins[rSkin].prefcolor
-				mo.radius = skins[rSkin].radius
-				mo.height = skins[rSkin].height
-				if skins[rSkin].followmobj
-				and skins[rSkin.followmobj] ~= MT_METALJETFUME then
-					local ftype = mobjinfo[skins[rSkin].followmobj]
+				mo.skin = skin.name
+				mo.color = skin.prefcolor
+				mo.radius = skin.radius
+				mo.height = skin.height
+				if skin.followitem
+				and skin.followitem ~= MT_METALJETFUME then
 					local fmo = P_SpawnMobjFromMobj(mo, -cos(mo.angle), -sin(mo.angle), 0, MT_THOK)
 					fmo.tracer = mo
 					fmo.flags = MF_NOGRAVITY|MF_SCENERY|MF_NOCLIP|MF_NOCLIPHEIGHT
 					fmo.flags2 = $|MF2_LINKDRAW
-					fmo.state = ftype.spawnstate
+					fmo.dispoffset = mobjinfo[skin.followitem].dispoffset
+					fmo.state = mobjinfo[skin.followitem].spawnstate
 				end
 			end
 		end
