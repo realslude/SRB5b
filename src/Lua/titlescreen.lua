@@ -80,11 +80,18 @@ addHook("ThinkFrame", function()
 				if skin.followitem
 				and skin.followitem ~= MT_METALJETFUME then
 					local fmo = P_SpawnMobjFromMobj(mo, -cos(mo.angle), -sin(mo.angle), 0, MT_THOK)
+					fmo.angle = mo.angle
 					fmo.tracer = mo
+					mo.tracer = fmo
+					fmo.skin = mo.skin
 					fmo.flags = MF_NOGRAVITY|MF_SCENERY|MF_NOCLIP|MF_NOCLIPHEIGHT
 					fmo.flags2 = $|MF2_LINKDRAW
 					fmo.dispoffset = mobjinfo[skin.followitem].dispoffset
 					fmo.state = mobjinfo[skin.followitem].spawnstate
+					if skin.followitem == MT_TAILSOVERLAY then
+						fmo.state = S_TAILSOVERLAY_STAND -- idk what this means i just copied from P_DoTailsOverlay :P
+						fmo.movecount = -1
+					end
 				end
 			end
 		end
@@ -99,3 +106,12 @@ addHook("ThinkFrame", function()
 	camera.aiming = cameraMo.srb5baiming
 end)
 
+addHook("MobjThinker", function(mo)
+	if (mo.tracer and mo.tracer.valid) then
+		A_CapeChase(mo.tracer, 1)
+	end
+end, MT_SRB5B_CHARSPAWN)
+
+addHook("HUD", function(v)
+	v.drawScaled(200*FU, 25*FU, FU/8, v.cachePatch("BFDISRB2LOGO"), V_SNAPTOTOP|V_SNAPTORIGHT)
+end, "title")
