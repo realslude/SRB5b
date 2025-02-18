@@ -3,7 +3,7 @@ local hasChecked = false
 local cameraMo
 local spawnList
 
-freeslot("MT_SRB5B_CHARSPAWN")
+freeslot("MT_SRB5B_CHARSPAWN", "MT_SRB5B_YOYLEBUSH")
 
 mobjinfo[MT_SRB5B_CHARSPAWN] = {
 	--$Title Character Spawn
@@ -16,6 +16,21 @@ mobjinfo[MT_SRB5B_CHARSPAWN] = {
 	height = 48*FU,
 	flags = MF_SCENERY
 }
+
+mobjinfo[MT_SRB5B_YOYLEBUSH] = {
+	--$Title Yoyleberry bush
+	--$Sprite YYBUA0
+	--$Category SRB5b
+	--$Angled
+	doomednum = 3203,
+	radius = 48*FU,
+	height = 64*FU,
+	flags = MF_SCENERY,
+	spritename = YYBU,
+	spriteframe = A,
+	duration = -1
+}
+
 
 local function getRandomSkin(blacklist)
 	blacklist = $ or {}
