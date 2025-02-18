@@ -94,7 +94,7 @@ addHook("ThinkFrame", function()
 						or line.frontsector ~= sec then continue end
 						
 						for ii = 0, #skins-1 do
-							if line.text == nil
+							if line.text == nil -- line.text only exists if linedef's action is 331 or 443 (kinda sucks since this is for binary but ehhh) -pac
 							or skins[ii].name ~= tostring(line.text):lower() then continue end
 							
 							randomAmount = $+1
@@ -108,13 +108,8 @@ addHook("ThinkFrame", function()
 					mo.srb5bisrandom = true
 					mo.srb5bskin = forceSkin
 				end
-					/*mo.srb5bskin = getRandomSkin(skinList)
-				end
 				
-				if mo.srb5bskin == nil then
-					P_RemoveMobj(mo)
-					continue
-				end*/
+				mo.srb5bready = false
 			end
 		end
 		cameraMo.srb5baiming = aimingAngle or 0
@@ -134,8 +129,8 @@ addHook("MobjThinker", function(mo)
 	if not mo.srb5bisrandom
 	and randomAmount > 0 then return end
 	
-	if not mo.srb5bready then
-		
+	if not mo.srb5bready
+	and mo.srb5bready ~= nil then
 		if mo.srb5bskin == nil then
 			mo.srb5bskin = getRandomSkin(skinList)
 		end
