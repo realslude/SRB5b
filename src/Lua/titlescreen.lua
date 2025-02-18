@@ -3,7 +3,7 @@ local hasChecked = false
 local cameraMo
 local spawnList
 
-freeslot("MT_SRB5B_CHARSPAWN", "MT_SRB5B_YOYLEBUSH")
+freeslot("MT_SRB5B_CHARSPAWN", "MT_SRB5B_YOYLEBUSH", "SPR_YYBU")
 
 mobjinfo[MT_SRB5B_CHARSPAWN] = {
 	--$Title Character Spawn
