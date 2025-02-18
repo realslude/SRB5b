@@ -1,7 +1,10 @@
 
 local hasChecked = false
 local cameraMo
-local spawnList
+
+-- charspawn stuff
+local randomAmount = 0
+local skinList = {}
 
 freeslot("MT_SRB5B_CHARSPAWN")
 freeslot("SPR_YYBU", "S_SRB5B_YOYLEBUSH", "MT_SRB5B_YOYLEBUSH") -- never let me (slude) code cuz im gonna mess it up REAL good
@@ -27,8 +30,7 @@ mobjinfo[MT_SRB5B_YOYLEBUSH] = {
 	radius = 48*FU,
 	height = 64*FU,
 	flags = MF_SCENERY,
-	spawnstate = S_SRB5B_YOYLEBUSH,
-	duration = -1
+	spawnstate = S_SRB5B_YOYLEBUSH
 }
 
 states[S_SRB5B_YOYLEBUSH] = {
@@ -59,13 +61,13 @@ addHook("ThinkFrame", function()
 	if gamestate ~= GS_TITLESCREEN then
 		hasChecked = false
 		cameraMo = nil
-		spawnList = nil
+		randomAmount = 0
 		return
 	end
 	
 	if not hasChecked then
 		local aimingAngle
-		local skinList = {}
+		skinList = {}
 		for mo in mobjs.iterate() do
 			if mo.type == MT_BLUECRAWLA then
 				local cmo = P_SpawnMobj(mo.x, mo.y, mo.z, MT_THOK)
@@ -83,35 +85,36 @@ addHook("ThinkFrame", function()
 				mo.tics = -1
 				mo.frame = $|FF_ANIMATE
 				
-				local rSkin = getRandomSkin(skinList)
-				
-				if rSkin == nil then
-					P_RemoveMobj(mo)
-					continue
-				end
-				local skin = skins[rSkin]
-				
-				skinList[rSkin] = true
-				mo.skin = skin.name
-				mo.color = skin.prefcolor
-				mo.radius = skin.radius
-				mo.height = skin.height
-				if skin.followitem
-				and skin.followitem ~= MT_METALJETFUME then
-					local fmo = P_SpawnMobjFromMobj(mo, -cos(mo.angle), -sin(mo.angle), 0, MT_THOK)
-					fmo.angle = mo.angle
-					fmo.tracer = mo
-					mo.tracer = fmo
-					fmo.skin = mo.skin
-					fmo.flags = MF_NOGRAVITY|MF_SCENERY|MF_NOCLIP|MF_NOCLIPHEIGHT
-					fmo.flags2 = $|MF2_LINKDRAW
-					fmo.dispoffset = mobjinfo[skin.followitem].dispoffset
-					fmo.state = mobjinfo[skin.followitem].spawnstate
-					if skin.followitem == MT_TAILSOVERLAY then
-						fmo.state = S_TAILSOVERLAY_STAND -- idk what this means i just copied from P_DoTailsOverlay :P
-						fmo.movecount = -1
+				local sec = mo.subsector and mo.subsector.sector or nil
+				local forceSkin
+				if (sec and sec.valid) then
+					for i = 0, #sec.lines do
+						local line = sec.lines[i]
+						if not (line and line.valid)
+						or line.frontsector ~= sec then continue end
+						
+						for ii = 0, #skins-1 do
+							if line.text == nil
+							or skins[ii].name ~= tostring(line.text):lower() then continue end
+							
+							randomAmount = $+1
+							forceSkin = ii
+							break 2
+						end
+						break
 					end
 				end
+				if forceSkin ~= nil then
+					mo.srb5bisrandom = true
+					mo.srb5bskin = forceSkin
+				end
+					/*mo.srb5bskin = getRandomSkin(skinList)
+				end
+				
+				if mo.srb5bskin == nil then
+					P_RemoveMobj(mo)
+					continue
+				end*/
 			end
 		end
 		cameraMo.srb5baiming = aimingAngle or 0
@@ -126,8 +129,54 @@ addHook("ThinkFrame", function()
 end)
 
 addHook("MobjThinker", function(mo)
+	
+	
+	if not mo.srb5bisrandom
+	and randomAmount > 0 then return end
+	
+	if not mo.srb5bready then
+		
+		if mo.srb5bskin == nil then
+			mo.srb5bskin = getRandomSkin(skinList)
+		end
+		
+		if mo.srb5bskin == nil then
+			P_RemoveMobj(mo)
+			return
+		end
+		
+		local skin = skins[mo.srb5bskin]
+		
+		skinList[mo.srb5bskin] = true
+		mo.skin = skin.name
+		mo.color = skin.prefcolor
+		mo.radius = skin.radius
+		mo.height = skin.height
+		if skin.followitem
+		and skin.followitem ~= MT_METALJETFUME then
+			local fmo = P_SpawnMobjFromMobj(mo, -cos(mo.angle), -sin(mo.angle), 0, MT_THOK)
+			fmo.angle = mo.angle
+			fmo.tracer = mo
+			mo.tracer = fmo
+			fmo.skin = mo.skin
+			fmo.flags = MF_NOGRAVITY|MF_SCENERY|MF_NOCLIP|MF_NOCLIPHEIGHT
+			fmo.flags2 = $|MF2_LINKDRAW
+			fmo.dispoffset = mobjinfo[skin.followitem].dispoffset
+			fmo.state = mobjinfo[skin.followitem].spawnstate
+			if skin.followitem == MT_TAILSOVERLAY then
+				fmo.state = S_TAILSOVERLAY_STAND
+				fmo.movecount = -1 -- idk what this means i just copied from P_DoTailsOverlay :P
+			end
+		end
+		
+		mo.srb5bready = true
+		if mo.srb5bisrandom then
+			randomAmount = $-1
+		end
+	end
+	
 	if (mo.tracer and mo.tracer.valid) then
-		A_CapeChase(mo.tracer, 1)
+		A_CapeChase(mo.tracer, 1, -FU)
 	end
 end, MT_SRB5B_CHARSPAWN)
 
