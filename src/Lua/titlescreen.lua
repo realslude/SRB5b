@@ -7,7 +7,7 @@ local randomAmount = 0
 local skinList = {}
 
 freeslot("MT_SRB5B_CHARSPAWN")
-freeslot("SPR_YYBU", "S_SRB5B_YOYLEBUSH", "MT_SRB5B_YOYLEBUSH") -- never let me (slude) code cuz im gonna mess it up REAL good
+freeslot("SPR_YYBU", "S_SRB5B_YOYLEBUSH", "MT_SRB5B_YOYLEBUSH", "SPR_LEFY", "S_SRB5B_LEAFYSIT", "MT_SRB5B_LEAFY") -- never let me (slude) code cuz im gonna mess it up REAL good
 
 mobjinfo[MT_SRB5B_CHARSPAWN] = {
 	--$Title Character Spawn
@@ -35,6 +35,23 @@ mobjinfo[MT_SRB5B_YOYLEBUSH] = {
 
 states[S_SRB5B_YOYLEBUSH] = {
     sprite = SPR_YYBU,
+    frame = A
+}
+
+mobjinfo[MT_SRB5B_LEAFY] = {
+	--$Title Leafy
+	--$Sprite LEFYA0
+	--$Category SRB5b
+	--$Angled
+	doomednum = 3204,
+	radius = 48*FU,
+	height = 64*FU,
+	flags = MF_SCENERY,
+	spawnstate = S_SRB5B_LEAFYSIT
+}
+
+states[S_SRB5B_LEAFYSIT] = {
+    sprite = SPR_LEFY,
     frame = A
 }
 
