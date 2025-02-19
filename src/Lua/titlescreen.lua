@@ -7,7 +7,7 @@ local randomAmount = 0
 local skinList = {}
 
 freeslot("MT_SRB5B_CHARSPAWN")
-freeslot("SPR_YYBU", "S_SRB5B_YOYLEBUSH", "MT_SRB5B_YOYLEBUSH", "SPR_LEFY", "S_SRB5B_LEAFYSIT", "MT_SRB5B_LEAFY") -- never let me (slude) code cuz im gonna mess it up REAL good
+freeslot("SPR_YYBU", "S_SRB5B_YOYLEBUSH", "MT_SRB5B_YOYLEBUSH", "SPR_LEFY", "S_SRB5B_LEAFYSIT", "MT_SRB5B_LEAFY", "SPR_BMBX", "S_SRB5B_BOOMBOX", "MT_SRB5B_BOOMBOX") -- never let me (slude) code cuz im gonna mess it up REAL good
 
 mobjinfo[MT_SRB5B_CHARSPAWN] = {
 	--$Title Character Spawn
@@ -44,8 +44,8 @@ mobjinfo[MT_SRB5B_LEAFY] = {
 	--$Category SRB5b
 	--$Angled
 	doomednum = 3204,
-	radius = 48*FU,
-	height = 64*FU,
+	radius = 16*FU,
+	height = 48*FU,
 	flags = MF_SCENERY,
 	spawnstate = S_SRB5B_LEAFYSIT
 }
@@ -53,6 +53,22 @@ mobjinfo[MT_SRB5B_LEAFY] = {
 states[S_SRB5B_LEAFYSIT] = {
     sprite = SPR_LEFY,
     frame = A
+}
+
+mobjinfo[MT_SRB5B_BOOMBOX] = {
+	--$Title Boombox
+	--$Sprite BMBXA0
+	--$Category SRB5b
+	--$Angled
+	doomednum = 3205,
+	radius = 16*FU,
+	height = 8*FU,
+	flags = MF_SCENERY,
+	spawnstate = S_SRB5B_BOOMBOX
+}
+
+states[S_SRB5B_BOOMBOX] = {
+    sprite = SPR_BMBX
 }
 
 local function getRandomSkin(blacklist)
