@@ -68,7 +68,10 @@ mobjinfo[MT_SRB5B_BOOMBOX] = {
 }
 
 states[S_SRB5B_BOOMBOX] = {
-    sprite = SPR_BMBX
+    sprite = SPR_BMBX,
+	frame = FF_ANIMATE,
+	var1 = D,
+	var2 = 2
 }
 
 local function getRandomSkin(blacklist)
