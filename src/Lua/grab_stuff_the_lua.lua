@@ -405,8 +405,8 @@ addHook("ThinkFrame", function()
 					mo.momx = p.mo.momx
 					mo.momy = p.mo.momy
 					P_MovePlayer(p2)
-					p2.pflags = $ & ~(PF_STARTJUMP|PF_JUMPED)
-					P_DoJump(p2, true)
+					p2.pflags = $|PF_JUMPDOWN & ~(PF_STARTJUMP|PF_JUMPED|PF_JUMPSTASIS)
+					P_DoJump(p2)
 					return
 				end
 			else
