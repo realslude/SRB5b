@@ -406,7 +406,8 @@ addHook("ThinkFrame", function()
 					mo.momy = p.mo.momy
 					P_MovePlayer(p2)
 					p2.pflags = $ & ~(PF_STARTJUMP|PF_JUMPED)
-					P_DoJump(p2)
+					P_DoJump(p2, true)
+					return
 				end
 			else
 				mo.angle = p.drawangle
@@ -421,7 +422,8 @@ addHook("ThinkFrame", function()
 			
 			if not P_IsObjectOnGround(p.mo) -- copying code HOORAY!!
 			and not (p.mo.eflags & MFE_GOOWATER)
-			and grabweight.value then
+			and grabweight.value
+			and not p.powers[pw_super] then
 				P_SetObjectMomZ(p.mo, -abs(FixedDiv(FixedDiv(mo.radius+mo.height, 112*FU), FU+FU/2)), true)
 			end
 			
