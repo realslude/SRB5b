@@ -39,7 +39,7 @@ end)
 
 
 
-freeslot("S_WINTOKEN","MT_WINTOKEN","SPR_WNTK", "SPR2_WORY")
+freeslot("S_WINTOKEN","MT_WINTOKEN","SPR_WNTK")
 
 freeslot("S_BOOK_HURRYUP")
 
@@ -47,7 +47,7 @@ freeslot("S_BOOK_HURRYUP")
 
 states[S_BOOK_HURRYUP] = {
 	sprite = SPR_PLAY,
-	frame = SPR2_WORY|FF_ANIMATE,
+	frame = SPR2_CNT1|FF_ANIMATE,
 	tics = -1,
 	var1 = J,
 	var2 = 2,
