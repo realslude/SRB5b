@@ -19,11 +19,11 @@ Title = Night_Mote
 Authors = Micheal_Huang
 Soundtestpage = 1
 Soundtestcond = 0
-BPM = 73
+BPM = 75
 
 Lump BOKGNG
 Title = The_Flintstones
-Alttitle = (super_remastered_not_unstylish version)
+Alttitle = (super_remastered_not_unstylish_version)
 Authors = SiIvaGunner
 Soundtestpage = 1
 Soundtestcond = 0

@@ -32,3 +32,16 @@ SaveGame = true
 SkyboxScale = 64
 FlickyList = Bluebird,Chipmunk
 NoVisitNeeded = true
+#
+
+Level 99
+Act = 0
+TypeOfLevel = Singleplayer,COOP
+Music = _TITLE
+NextLevel = 1100
+SkyNum = 2013
+RecordAttack = false
+SaveGame = false
+LevelFlags = 1808
+Hidden = true
+HideInStats = true
