@@ -17,16 +17,11 @@ addHook("PlayerThink", function(p)
     if not (p.mo and p.mo.valid)
 	or not SRB5b_skinCheck(p.mo.skin) return end
 	
+	local skin = skins[p.mo.skin]
 	-- super form stuff
 	if p.powers[pw_super]
+	or (p.mo.color >= skin.supercolor and p.mo.color <= skin.supercolor+4) then
 		p.mo.color = SKINCOLOR_YOYLEMETAL
-		/*if p.mo.skin ~= "book" then
-			p.mo.colorized = true
-			p.srb5bsuper = true
-		end
-	elseif p.srb5bsuper then
-		p.srb5bsuper = false
-		p.mo.colorized = false*/
 	end
 end)
 
