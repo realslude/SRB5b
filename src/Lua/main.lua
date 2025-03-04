@@ -43,14 +43,19 @@ freeslot("S_WINTOKEN","MT_WINTOKEN","SPR_WNTK")
 
 freeslot("S_BOOK_HURRYUP")
 
-
+function A_SetPAnim(mo, var1, var2)
+	if not (mo.player and mo.player.valid)
+	or var1 == nil then return end
+	
+	mo.player.panim = var1
+end
 
 states[S_BOOK_HURRYUP] = {
 	sprite = SPR_PLAY,
-	frame = SPR2_CNT1|FF_ANIMATE,
-	tics = -1,
-	var1 = J,
-	var2 = 2,
+	frame = SPR2_CNT1,
+	tics = 2,
+	action = A_SetPAnim,
+	var1 = PA_IDLE,
 	nextstate = S_BOOK_HURRYUP
 }
 
@@ -64,13 +69,11 @@ addHook("PlayerThink", function(p)
 	if ((PizzaTime and PizzaTime.PizzaTime) -- checks if you're in ptopp's pizza time
 	or (PTJE and PTJE.pizzatime) -- checks if you're in Jisk Edition/Spice Runners's pizza time
 	or (PizzaTime and PizzaTime.sync and PizzaTime.sync.PizzaTime) -- checks if you're in PTv2's pizza time
-	or (IPPT and IPPT.pizzatime) -- shhhhhhhhhhhhhhh
 	or (HAPPY_HOUR and HAPPY_HOUR.happyhour)) -- and checks if IT'S HAPPY HOUR
 	and p.panim == PA_IDLE
 	and p.mo.state ~= S_BOOK_HURRYUP
 	and not p.powers[pw_super] then -- and you're not super
 		p.mo.state = S_BOOK_HURRYUP
-		p.panim = PA_IDLE
 	end
 end)
 
@@ -210,9 +213,9 @@ local function doCharDef()
 	if not FangsHeist
 	or hasLoaded then return end
 	
-	FangsHeist.makeCharacter("book", {pregameBackground = "FH_BOOKBG"})
-	FangsHeist.makeCharacter("icecube", {pregameBackground = "FH_ICYBG"})
-	FangsHeist.makeCharacter("match", {pregameBackground = "FH_MATCHBG"})
+	FangsHeist.makeCharacter("book", {pregameBackground = "FH_BOOKBG", panicState = S_BOOK_HURRYUP})
+	FangsHeist.makeCharacter("icecube", {pregameBackground = "FH_ICYBG", panicState = S_BOOK_HURRYUP})
+	FangsHeist.makeCharacter("match", {pregameBackground = "FH_MATCHBG", panicState = S_BOOK_HURRYUP})
 	hasLoaded = true
 end
 
