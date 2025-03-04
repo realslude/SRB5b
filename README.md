@@ -16,4 +16,4 @@ If you've found the addon interesting please do check out the [website!](https:/
 
 To download builds of the mod you can either [join the Discord (link directs you to the channel where you'd find the builds)](https://discord.com/invite/PZufdewhH5) or [have a look at the Message Board page](https://mb.srb2.org/addons/srb5b-bfdia-5b.6216/history "All uploaded files to the MB")
 
-## [Credits](https://sites.google.com/view/srb5b/extras/team-srb5b-credits)
+## [Credits](https://sites.google.com/view/srb5b/team-srb5b-credits)
