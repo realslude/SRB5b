@@ -129,7 +129,7 @@ local intspec = {}
 local hudinfoList = { "x", "y", "f" }
 local srb5bLives = {x = 16, y = 176-12, f = V_SNAPTOLEFT|V_SNAPTOBOTTOM|V_PERPLAYER}
 local prevlives
-
+local hudActive = false
 addHook("ThinkFrame", function()
 	if not displayplayer
 	and not (splitscreen and secondarydisplayplayer) return end
@@ -141,7 +141,7 @@ addHook("ThinkFrame", function()
 	if not (p.mo and p.mo.valid) then return end
 	
 	if not SRB5b_skinCheck(p.mo.skin)
-		if p.fbhudactive or p.fbhudactive == nil then  -- f stands for five since uhhh i cant do 5b
+		if hudActive then
 			if prevlives then
 				for _, val in ipairs(hudinfoList) do
 					hudinfo[HUD_LIVES][val] = prevlives[val]
@@ -149,16 +149,16 @@ addHook("ThinkFrame", function()
 				prevlives = nil
 			end
 			hud.enable("coopemeralds")
-			p.fbhudactive = false
+			hudActive = false
 		end
-	elseif not p.fbhudactive then
+	elseif not hudActive then
 		hud.disable("coopemeralds")
 		prevlives = {}
 		for _, val in ipairs(hudinfoList) do
 			prevlives[val] = hudinfo[HUD_LIVES][val]
 			hudinfo[HUD_LIVES][val] = srb5bLives[val]
 		end
-		p.fbhudactive = true
+		hudActive = true
 	end
 end)
 
@@ -306,6 +306,23 @@ addHook("PlayerThink", function(p)
 	end
 end)
 
+local function IsSpecialStage(mapnum) -- unnecessarily translate G_IsSpecialStage to lua, because why not? also gives you which special stage you're in
+	mapnum = $ ~= nil and $ or gamemap
+	if (modeattacking)
+		return false;
+	end
+	
+	if (mapnum >= sstage_start and mapnum <= sstage_end)
+		return true, mapnum-sstage_start+1;
+	end
+	
+	if (mapnum >= smpstage_start and mapnum <= smpstage_end)
+		return true, mapnum-smpstage_start+1;
+	end
+
+	return false;
+end
+
 addHook("HUD", function(v, p)
 	v.drawString(160, 0, "SRB5b Discord Link:", V_SNAPTOTOP|V_30TRANS|V_ALLOWLOWERCASE, "small-center")
 	v.drawString(160, 4, "discord.gg/PZufdewhH5", V_SNAPTOTOP|V_30TRANS|V_ALLOWLOWERCASE, "small-center")
@@ -319,6 +336,11 @@ addHook("HUD", function(v, p)
 	if name == "" then name = "undefined" end
 	local mnum = ((gamemap ~= tutorialmap) and gamemap) or 0
 	local actnum = mapheaderinfo[gamemap].actnum
+	
+	local isSS, SSNum = IsSpecialStage() -- SS = Special Stage
+	if isSS then
+		mnum = "SS "+SSNum
+	end
 	
 	if p.bookcustomtext
 	and type(p.bookcustomtext) == "table" then
@@ -390,7 +412,7 @@ local emeraldslist = {
 }
 
 addHook("HUD", function(v)
-	if not G_CoopGametype()
+	if (netgame or multiplayer) and not (gametyperules & GTR_CAMPAIGN)
 	or not displayplayer
 	or not SRB5b_skinCheck(skins[displayplayer.skin].name) then return end
 	
@@ -401,26 +423,13 @@ addHook("HUD", function(v)
 	for i = 0, 6 do
 		if not (emeralds & 1<<i) then continue end
 		
-		v.drawScaled(emeraldPos[i].x<<FRACBITS+patch.leftoffset<<FRACBITS, emeraldPos[i].y<<FRACBITS+patch.topoffset<<FRACBITS, FU, patch, 0, v.getColormap("sonic", emeraldslist[i]))
+		local x, y = emeraldPos[i].x, emeraldPos[i].y
+		if (netgame or multiplayer) then
+			x, y = 20 + (i * 10), 7
+		end
+		v.drawScaled(x*FU, y*FU, FU, patch, 0, v.getColormap(TC_DEFAULT, emeraldslist[i]))
 	end
 end, "scores")
-
-local function IsSpecialStage(mapnum) -- unnecessarily translate G_IsSpecialStage to lua, because why not?
-	mapnum = $ ~= nil and $ or gamemap
-	if (modeattacking)
-		return false;
-	end
-	
-	if (mapnum >= sstage_start and mapnum <= sstage_end)
-		return true;
-	end
-	
-	if (mapnum >= smpstage_start and mapnum <= smpstage_end)
-		return true;
-	end
-
-	return false;
-end
 
 local function P_GetNextEmerald()
 	if (gamemap >= sstage_start and gamemap <= sstage_end)
