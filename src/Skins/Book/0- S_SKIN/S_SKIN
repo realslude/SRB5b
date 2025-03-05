@@ -1,4 +1,5 @@
 name = book
+realname = Book
 ability = CA_NONE
 ability2 = CA2_NONE
 normalspeed = 36
