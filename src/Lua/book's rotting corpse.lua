@@ -1,4 +1,4 @@
-
+/*
 -- i lov book corpse
 -- (i dont)
 
@@ -125,14 +125,14 @@ addHook("MobjThinker", function(mo)
 	end
 end, MT_BOOK_CORPSE)
 
-addHook("ShouldDamage", function(mo, _, _, _, dmgtype)
-	if not (dmgtype & DMG_DEATHMASK) then return false end
-	
-	/*if dmgtype == DMG_CRUSHED then
-		if mo.height < FU/25 then return end
-		
-		mo.height = max($-FU, 0)
-		mo.spriteyscale = FixedMul( FixedDiv(FixedDiv(mo.height, mo.scale), mo.info.height), skins["book"].highresscale)
-		return false
-	end*/
-end, MT_BOOK_CORPSE)
+--addHook("ShouldDamage", function(mo, _, _, _, dmgtype)
+--	if not (dmgtype & DMG_DEATHMASK) then return false end
+--	
+--	if dmgtype == DMG_CRUSHED then
+--		if mo.height < FU/25 then return end
+--		
+--		mo.height = max($-FU, 0)
+--		mo.spriteyscale = FixedMul( FixedDiv(FixedDiv(mo.height, mo.scale), mo.info.height), skins["book"].highresscale)
+--		return false
+--	end
+end, MT_BOOK_CORPSE)*/
