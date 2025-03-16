@@ -28,3 +28,10 @@ Match has the highest jump out of the three.
 
 Match can roll with ^2SPIN^0!
 #
+Character
+SkinName = bubble
+DisplayName = Bubble
+TagTextColor = SKINCOLOR_YOGURT
+TagOutlineColor = SKINCOLOR_ROSEWOOD
+PlayerText = insert bubble text
+#

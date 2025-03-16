@@ -102,10 +102,8 @@ local emeraldslist = {
 }
 
 local function skinCheck(skin)
-	if skin == nil then return end -- no PESKY ERRORS >:( -pac
-	
 	skin = skins[$].name
-	return (skin == "book" or skin == "icecube" or skin == "match") -- bubble who?
+	return (skin == "book" or skin == "icecube" or skin == "match" or skin == "bubble")
 end
 
 rawset(_G, "SRB5b_skinCheck", skinCheck)
