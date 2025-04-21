@@ -18,6 +18,7 @@ addHook("PlayerThink", function(p)
 	or not SRB5b_skinCheck(p.mo.skin)
 		if p.bookcolorized then
 			p.bookcolorized = false
+			p.mo.eflags = $ & ~MFE_FORCESUPER
 			p.mo.colorized = false
 		end
 		return
@@ -31,6 +32,8 @@ addHook("PlayerThink", function(p)
 	end
 	
 	if p.mo.skin ~= "icecube"
+	and p.mo.health > 0 -- if you're
+	and p.playerstate == PST_LIVE -- actually alive
 	and ( (p.powers[pw_shield] & SH_FIREFLOWER)
 	or mapheaderinfo[gamemap]
 	and (mapheaderinfo[gamemap].typeoflevel & TOL_MARIO)
@@ -42,6 +45,7 @@ addHook("PlayerThink", function(p)
 		p.mo.eflags = $|MFE_FORCESUPER
 	elseif p.bookcolorized then
 		p.mo.colorized = false
+		p.mo.eflags = $ & ~MFE_FORCESUPER
 		p.bookcolorized = false
 	end
 end)
