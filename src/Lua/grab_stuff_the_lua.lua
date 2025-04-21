@@ -424,7 +424,11 @@ addHook("ThinkFrame", function()
 			and not (p.mo.eflags & MFE_GOOWATER)
 			and grabweight.value
 			and not p.powers[pw_super] then
-				P_SetObjectMomZ(p.mo, -abs(FixedDiv(FixedDiv(mo.radius+mo.height, 112*FU), FU+FU/2)), true)
+				local baseGrav = FU/2 -- base gravity is 0.5
+				local curGrav = abs(P_GetMobjGravity(p.mo)) -- get current gravity
+				local gravMul = FixedDiv(curGrav, baseGrav) -- get the factor we should multiply the weight so it should work similarly on all gravities, i think thats how Physics work
+				local moWeight = -abs(FixedDiv(FixedDiv(mo.radius+mo.height, 112*FU), FU+FU/2))
+				P_SetObjectMomZ(p.mo, FixedMul(moWeight, gravMul), true)
 			end
 			
 			if (p.cmd.buttons & BT_CUSTOM1)
