@@ -362,7 +362,7 @@ addHook("ThinkFrame", function()
 				local closestDist = INT32_MAX
 				searchBlockmap("objects", function(_, mo)
 					local moDist = R_PointToDist2(p.mo.x, p.mo.y, mo.x, mo.y)
-					if not ((mo.flags & (MF_ENEMY|MF_PUSHABLE|MF_SCENERY|MF_MONITOR)) or mo.info.bookgrabbable or grabanything.value)
+					if not ((mo.flags & (MF_ENEMY|MF_PUSHABLE|MF_SPRING|MF_MONITOR)) or mo.info.bookgrabbable or grabanything.value)
 					and not ((mo.player and mo.player.valid) and grabgrief.value)
 					or moDist > p.mo.radius+mo.radius+64*p.mo.scale
 					or moDist >= closestDist
