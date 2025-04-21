@@ -6,7 +6,7 @@ freeslot("SPR2_GANG", "S_BOOK_GANGNAM")
 
 states[S_BOOK_GANGNAM] = {
 	sprite = SPR_PLAY,
-	frame = SPR2_GANG|FF_GLOBALANIM|FF_ANIMATE,
+	frame = SPR2_GANG,
 	tics = -1,
 	nextstate = S_BOOK_GANGNAM,
 	var1 = N,
@@ -46,6 +46,7 @@ addHook("PlayerThink", function(p)
 				P_RestoreMusic(p)
 				p.bookgangnamsong = false
 			end
+			p.bookgangnam = false
 		end
 		return
 	end
@@ -98,6 +99,12 @@ addHook("PlayerThink", function(p)
 		
 		if p.mo.state ~= S_BOOK_GANGNAM
 			p.mo.state = S_BOOK_GANGNAM
+		else
+			local state = states[p.mo.state]
+			-- srb2 wants to screw up our anim?
+			-- how about we just do it ourselves then!
+			-- -pac
+			p.mo.frame = (leveltime / state.var2) % (state.var1 + 1)
 		end
 		p.pflags = $1|PF_FULLSTASIS
 	else
