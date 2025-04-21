@@ -214,6 +214,7 @@ local function doCharDef()
 	FangsHeist.makeCharacter("book", {pregameBackground = "FH_BOOKBG", panicState = S_BOOK_HURRYUP})
 	FangsHeist.makeCharacter("icecube", {pregameBackground = "FH_ICYBG", panicState = S_BOOK_HURRYUP})
 	FangsHeist.makeCharacter("match", {pregameBackground = "FH_MATCHBG", panicState = S_BOOK_HURRYUP})
+	FangsHeist.makeCharacter("bubble", {pregameBackground = "FH_BUBBLEBG", panicState = S_BOOK_HURRYUP})
 	hasLoaded = true
 end
 
