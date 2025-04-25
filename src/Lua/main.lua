@@ -103,7 +103,7 @@ local emeraldslist = {
 
 local function skinCheck(skin)
 	skin = skins[$].name
-	return (skin == "book" or skin == "icecube" or skin == "match" or skin == "bubble")
+	return (skin == "book" or skin == "icecube" or skin == "match")
 end
 
 rawset(_G, "SRB5b_skinCheck", skinCheck)
@@ -214,7 +214,6 @@ local function doCharDef()
 	FangsHeist.makeCharacter("book", {pregameBackground = "FH_BOOKBG", panicState = S_BOOK_HURRYUP})
 	FangsHeist.makeCharacter("icecube", {pregameBackground = "FH_ICYBG", panicState = S_BOOK_HURRYUP})
 	FangsHeist.makeCharacter("match", {pregameBackground = "FH_MATCHBG", panicState = S_BOOK_HURRYUP})
-	FangsHeist.makeCharacter("bubble", {pregameBackground = "FH_BUBBLEBG", panicState = S_BOOK_HURRYUP})
 	hasLoaded = true
 end
 
