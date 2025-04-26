@@ -212,5 +212,5 @@ addHook("MobjThinker", function(mo)
 end, MT_SRB5B_CHARSPAWN)
 
 addHook("HUD", function(v)
-	v.drawScaled(150*FU, 75*FU, FU/5, v.cachePatch("BFDISRB2LOGO"), V_SNAPTOTOP|V_SNAPTORIGHT)
+	v.drawScaled(15*FU, 15*FU, FU/3, v.cachePatch("BFDISRB2LOGO"), V_SNAPTOTOP|V_SNAPTOLEFT)
 end, "title")
