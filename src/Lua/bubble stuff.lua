@@ -19,16 +19,18 @@ addHook("PlayerMsg", function(p, msgtype, _, msg)
 end)
 
 addHook("PlayerSpawn", function(p)
+	p.bubbletics = 0
 	if not bubbleCheck(p.mo) then return end
 	
 	p.bubblesprung = false
 end)
 
+local bubbleTime = TICRATE/2
+
 addHook("PlayerThink", function(p)
 	if not (p.mo and p.mo.valid) then return end
 	
-	if displayplayer
-	and displayplayer == p then
+	if P_IsLocalPlayer(p) then
 		if p.mo.skin == "bubble" then
 			hud.disable("rings")
 			p.bubbleringhud = true
@@ -42,6 +44,8 @@ addHook("PlayerThink", function(p)
 	if p.mo.skin ~= "bubble" -- if you're not bubble 
 	or p.playerstate == PST_DEAD -- or you're dead
 	or not p.mo.health -- in some way
+	or p.powers[pw_flashing] -- or you're flashing, somehow
+	or p.bubbletics <= bubbleTime -- or you haven't existed as bubble for more than half a second
 	or p.exiting then return end -- or you're exiting the level, then don't proceed
 	
 	if (p.mo.eflags & MFE_SPRUNG) then
@@ -75,17 +79,20 @@ addHook("PlayerThink", function(p)
 	if floatCheck then
 		P_SetObjectMomZ(p.mo, FU/5, true)
 	end
+	p.bubbletics = $+1
 end)
 
 addHook("MobjDamage", function(pmo, inf, src, _, dmgtype)
-	if not bubbleCheck(pmo) then return end
+	if not bubbleCheck(pmo)
+	or pmo.player.bubbletics <= bubbleTime then return end
 	
 	P_KillMobj(pmo, inf, src, dmgtype)
 	return true
 end, MT_PLAYER)
 
 addHook("MobjMoveBlocked", function(pmo, mo, line)
-	if not bubbleCheck(pmo) then return end
+	if not bubbleCheck(pmo)
+	or pmo.player.bubbletics <= bubbleTime then return end
 	
 	local inf
 	if (mo and mo.valid)
