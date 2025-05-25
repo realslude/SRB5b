@@ -84,7 +84,15 @@ local function addEntry(icon, name, desc, cmd)
 end
 
 -- im so good with names !!
-local fontCacheThingIDontKnowIfThisFallsIntoCacheOrNot = {}
+local cacheThingIDontKnowIfThisFallsIntoCacheOrNot = {}
+
+-- cacheThingIDontKnowIfThisFallsIntoCacheOrNot part 2
+local function getPatch(v, name)
+	if not (cacheThingIDontKnowIfThisFallsIntoCacheOrNot[name] and cacheThingIDontKnowIfThisFallsIntoCacheOrNot[name].valid) then
+		cacheThingIDontKnowIfThisFallsIntoCacheOrNot[name] = v.cachePatch(name)
+	end
+	return cacheThingIDontKnowIfThisFallsIntoCacheOrNot[name]
+end
 
 /*
 	because we need croppabl fonts so it yknow,
@@ -112,11 +120,7 @@ local function drawFont(v, x, y, hscale, vscale, text, flags, colormap, sx, sy, 
 	text = tostring($)
 	
 	for i = 1, #text do
-		local patch
-		if not fontCacheThingIDontKnowIfThisFallsIntoCacheOrNot[patch] then
-			fontCacheThingIDontKnowIfThisFallsIntoCacheOrNot[patch] = v.cachePatch(patch)
-		end
-		patch = fontCacheThingIDontKnowIfThisFallsIntoCacheOrNot[$]
+		local patch = getPatch(v, "cool name goes here!")
 		
 		v.drawCropped(
 			x, y,
@@ -140,7 +144,6 @@ end
 
 -- actually adding the shtuff to the list
 -- to future self: search for spongebob movie to find this
-for i = 1, 10 do
 addEntry(
 	"MENU_GRABANYTHING",
 	"Grab anything",
@@ -148,39 +151,98 @@ addEntry(
 (E.g. rings, bosses, trees, Braks electric shield /srs)]], -- big strings are really cool :D
 	"book_grabanything"
 )
-end
+
+addEntry(
+	"MENU_GRABWEIGHT",
+	"Grab weight",
+	[[Determines if the object that you are holding should have weight.
+The larger the object the more weight it would have.
+Weight affects how high your jump is]],
+	"book_grabweight"
+)
+
+addEntry(
+	"MENU_GRABBRAIN",
+	"Carried object AI",
+	[[Allows for the object that you are carrying to function normally
+(E.g. a carried turret will still shoot)]],
+	"book_grabbrain"
+)
 
 COM_AddCommand("book_menu", function(p)
 	if not (p and p.valid)
 	or not (p.realmo and p.realmo.valid)
 	or p.playerstate == PST_DEAD
-	or p.mo.health <= 0 then
+	or p.mo.health <= 0
+	or not p.fbmenu then
 		rightPrint(p, "please be not dead and alive and in-game and all that stuff :D")
 		return
 	end
 	
-	p.fbmenu = not $
+	p.fbmenu.active = not $
+end)
+
+COM_AddCommand("abc", function(p, arg) -- debug !
+	p.fbmenu.num = tonumber(arg)
 end)
 
 addHook("PlayerThink", function(p) -- handles the menu-ing
 	if not (p.realmo and p.realmo.valid)
 	or p.playerstate == PST_DEAD
 	or p.mo.health <= 0 then
-		p.fbmenu = false
+		if p.fbmenu then
+			p.fbmenu.active = false
+		end
 		return
 	end
 	
 	if p.fbmenu == nil then
-		p.fbmenu = false
+		p.fbmenu = {
+			active = false,
+			num = 1
+		}
 	end
 	
+	if not p.fbmenu.active then
+		p.fbmenu.num = 1
+		return
+	end
 	
+	local menu = p.fbmenu
 end)
 
-local boxWidth = 160
-local boxHeight = 100
+local boxWidth = 240
+local boxHeight = 150
+local horizPadding = 8*FU
+local vertPadding = 8*FU
 addHook("HUD", function(v, p)
-	if not p.fbmenu then return end
+	if not p.fbmenu
+	or not p.fbmenu.active then return end
+	local menu = p.fbmenu
 	
-	v.drawFill(160-boxWidth/2, 100-boxHeight/2, boxWidth, boxHeight, 31|V_40TRANS)
+	local flags = 0
+	v.drawFill(160-boxWidth/2, 100-boxHeight/2, boxWidth, boxHeight, 31|V_40TRANS|flags)
+	
+	local x, y = (160-boxWidth/2)*FU + horizPadding, (100-boxHeight/2)*FU + vertPadding
+	local entryLen = #entryList
+	for i = min(menu.num, entryLen), entryLen do
+		local entry = entryList[i]
+		
+		local gfx = getPatch(v, entry.icon)
+		local yAdd = 32*FU
+		local textX = x
+		if (gfx and gfx.valid) then
+			v.drawScaled(x, y, FU/2, gfx, flags)
+			
+			textX = $ + gfx.width * (FU/2) + horizPadding
+			yAdd = gfx.height * (FU/2) + vertPadding
+		end
+		
+		if entry.desc then
+			v.drawString(textX, y, entry.desc, flags, "fixed")
+		end
+		
+		y = $+yAdd
+		if y >= (100+boxHeight/2)*FU - vertPadding then break end
+	end
 end)
