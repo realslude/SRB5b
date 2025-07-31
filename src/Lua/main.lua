@@ -201,3 +201,12 @@ addHook("PlayerThink", function(p)
 		p.mo.tics = min($, 4)
 	end
 end)
+
+// poyo
+if not(kirbyabilitytable)
+    rawset(_G, "kirbyabilitytable", {})
+end
+kirbyabilitytable[MT_BOOK_METALBOX] = 3 // metal box give stone
+kirbyabilitytable["book"] = 10 //book give sword cuz cutter ability doesnt exist
+kirbyabilitytable["match"] = 1 //match give fire
+kirbyabilitytable["icecube"] = 2 //idk what *ice*cube gives :p
