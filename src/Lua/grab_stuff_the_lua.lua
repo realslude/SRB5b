@@ -110,7 +110,7 @@ local function canGrab(p)
 	or p.playerstate == PST_DEAD
 	--or (p.bookheldplyr and p.bookheldplyr.valid)
 	or (p.mo.bookheldplyr and p.mo.bookheldplyr.valid)
-	or FangsHeist and not FangsHeist.canUseAbility(p) -- heist!
+	or (p.pflags & PF_STASIS)
 		return false
 	end
 	return true
