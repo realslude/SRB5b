@@ -201,24 +201,3 @@ addHook("PlayerThink", function(p)
 		p.mo.tics = min($, 4)
 	end
 end)
-
--- heisting.
--- -pac
-
-local hasLoaded = false
-
-local function doCharDef()
-	if not FangsHeist
-	or hasLoaded then return end
-	
-	FangsHeist.makeCharacter("book", {pregameBackground = "FH_BOOKBG", panicState = S_BOOK_HURRYUP})
-	FangsHeist.makeCharacter("icecube", {pregameBackground = "FH_ICYBG", panicState = S_BOOK_HURRYUP})
-	FangsHeist.makeCharacter("match", {pregameBackground = "FH_MATCHBG", panicState = S_BOOK_HURRYUP})
-	hasLoaded = true
-end
-
-doCharDef()
-
-addHook("AddonLoaded", function()
-	doCharDef()
-end)
