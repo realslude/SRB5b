@@ -81,20 +81,21 @@ addHook("PlayerThink", function(p)
 			musLen = S_GetMusicLength()
 		end
 		
-		local didLoop = false
-		local uPos = gangnamPos
-		while uPos > musLen do
-			uPos = $-musLen
-			didLoop = true
-		end
-		if didLoop then uPos = $+(S_GetMusicLoopPoint(p) or 0) end
-		
-		if musName ~= jingleName
-		and musPlaying then
-			S_ChangeMusic(jingleName, true, p, 0, (uPos or 0))
-		elseif musName == jingleName
-		and musPlaying then
-			S_SetMusicPosition(uPos)
+		if musPlaying
+		and musLen > 0 then
+			local didLoop = false
+			local uPos = gangnamPos
+			while uPos > musLen do
+				uPos = $-musLen
+				didLoop = true
+			end
+			if didLoop then uPos = $+(S_GetMusicLoopPoint(p) or 0) end
+			
+			if musName ~= jingleName then
+				S_ChangeMusic(jingleName, true, p, 0, (uPos or 0))
+			elseif musName == jingleName then
+				S_SetMusicPosition(uPos)
+			end
 		end
 		
 		if p.mo.state ~= S_BOOK_GANGNAM
@@ -102,7 +103,7 @@ addHook("PlayerThink", function(p)
 		else
 			local state = states[p.mo.state]
 			-- srb2 wants to screw up our anim?
-			-- how about we just do it ourselves then!
+			-- how about we just do it ourselves then!!
 			-- -pac
 			p.mo.frame = (leveltime / state.var2) % (state.var1 + 1)
 		end
